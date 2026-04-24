@@ -1,0 +1,13 @@
+{
+  "name": "xhs-publisher-mvp",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "playwright": "^1.53.0"
+  }
+}
+

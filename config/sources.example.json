@@ -1,0 +1,130 @@
+[
+  {
+    "name": "ozon_search_promo_fixed_rates",
+    "source_type": "ozon_seller_news",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://seller.ozon.ru/media/news/prodvizhenie-v-poiske-zafiksiruem-stavki-dlya-kazhdoj-kategorii/",
+    "content_focus": "ads, search ranking, pricing",
+    "topic_hint": "Track official changes in search-promotion bidding and category-level ad pricing.",
+    "preferred_keywords": ["search-promo", "ad-rate", "category-rate"]
+  },
+  {
+    "name": "ozon_external_promotion_rules",
+    "source_type": "ozon_seller_news",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://seller.ozon.ru/media/news/novoe-v-reglamente-prodvizheniya-razdel-o-vneshnem-prodvizhenii/",
+    "content_focus": "traffic acquisition, external promotion, influencer traffic",
+    "topic_hint": "Track official changes in external traffic and influencer-promotion rules.",
+    "preferred_keywords": ["external-promo", "traffic", "vk"]
+  },
+  {
+    "name": "ozon_brand_promo_logo_search",
+    "source_type": "ozon_seller_news",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://seller.ozon.ru/media/news/prodvizhenie-brendov-mozhem-pokazyvat-logotip-tovara-v-poiske/",
+    "content_focus": "brand operations, search visibility",
+    "topic_hint": "Track official brand-promotion updates that influence search visibility and CTR.",
+    "preferred_keywords": ["brand-promo", "logo", "search-visibility"]
+  },
+  {
+    "name": "ozon_indexing_errors_report",
+    "source_type": "ozon_help_doc",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://docs.ozon.ru/global/en/analytics/fulfillment-reports/indexing-errors/",
+    "content_focus": "search inclusion, listing quality, indexing",
+    "topic_hint": "Track official indexing-error guidance for better product discoverability.",
+    "preferred_keywords": ["indexing", "listing-quality", "search"]
+  },
+  {
+    "name": "ozon_promoted_brands_doc",
+    "source_type": "ozon_help_doc",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://docs.ozon.ru/global/en/promotion/product-promotions/promoted-brands/",
+    "content_focus": "brand operations, paid visibility, platform tools",
+    "topic_hint": "Track official brand-promotion mechanism and fee changes.",
+    "preferred_keywords": ["brand", "promotion-fee", "visibility"]
+  },
+  {
+    "name": "ozon_pay_per_click_doc",
+    "source_type": "ozon_help_doc",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://docs.ozon.ru/global/en/promotion/product-promotions/pay-per-click/",
+    "content_focus": "ads, bid strategy, campaign management",
+    "topic_hint": "Track official pay-per-click promotion guidance and budget management.",
+    "preferred_keywords": ["ppc", "campaign", "ad-budget"]
+  },
+  {
+    "name": "ozon_localisation_index",
+    "source_type": "ozon_logistics_article",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://seller.ozon.ru/media/logistics/kak-rabotaet-indeks-lokalizacii/",
+    "content_focus": "logistics, warehouse placement, cost control",
+    "topic_hint": "Track logistics-localisation guidance that affects delivery cost and exposure.",
+    "preferred_keywords": ["localisation-index", "warehouse", "logistics-cost"]
+  },
+  {
+    "name": "ozon_cross_docking_vrc",
+    "source_type": "ozon_logistics_article",
+    "enabled": true,
+    "fetch_mode": "browser",
+    "wait_ms": 7000,
+    "url": "https://seller.ozon.ru/media/logistics/chto-takoe-kross-doking-i-vrc-na-ozon/",
+    "content_focus": "FBO logistics, nationwide distribution",
+    "topic_hint": "Track cross-docking and virtual distribution-center guidance for supply planning.",
+    "preferred_keywords": ["cross-docking", "vrc", "fbo"]
+  },
+  {
+    "name": "ikjzd_ozon_commission_news",
+    "source_type": "content_page",
+    "enabled": true,
+    "fetch_mode": "http",
+    "url": "https://www.ikjzd.com/news/540799",
+    "content_focus": "fees, margin pressure, logistics pricing",
+    "topic_hint": "Collect public Chinese coverage of Ozon commission and logistics policy changes.",
+    "preferred_keywords": ["commission", "logistics", "policy"]
+  },
+  {
+    "name": "ikjzd_ozon_china_strategy_news",
+    "source_type": "content_page",
+    "enabled": true,
+    "fetch_mode": "http",
+    "url": "https://www.ikjzd.com/news/488817",
+    "content_focus": "china sellers, platform strategy, seller support",
+    "topic_hint": "Collect public Chinese coverage of Ozon strategy updates for China sellers.",
+    "preferred_keywords": ["china-sellers", "strategy", "growth"]
+  },
+  {
+    "name": "ikjzd_ozon_logistics_expansion",
+    "source_type": "content_page",
+    "enabled": true,
+    "fetch_mode": "http",
+    "url": "https://www.ikjzd.com/news/547972",
+    "content_focus": "logistics infrastructure, delivery coverage, fulfillment",
+    "topic_hint": "Collect public Chinese coverage of Ozon logistics-network expansion.",
+    "preferred_keywords": ["logistics-network", "fulfillment", "coverage"]
+  },
+  {
+    "name": "ikjzd_ozon_business_survey",
+    "source_type": "content_page",
+    "enabled": true,
+    "fetch_mode": "http",
+    "url": "https://www.ikjzd.com/news/522427",
+    "content_focus": "merchant sentiment, market demand, category expansion",
+    "topic_hint": "Collect public Chinese coverage of seller sentiment and market-expansion survey data.",
+    "preferred_keywords": ["merchant-survey", "demand", "expansion"]
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "chwang_ozon_article_list",
+    "enabled": true,
+    "source_type": "chwang_article_list",
+    "url": "https://www.chwang.com/ozon/article",
+    "site_name": "出海网",
+    "preferred_keywords": ["Ozon", "实操干货", "俄罗斯"]
+  },
+  {
+    "name": "ozon_topic_tags_explained",
+    "enabled": false,
+    "url": "https://www.10100.com/article/22062828",
+    "site_name": "10100",
+    "category_tag": "热搜词解读",
+    "preferred_keywords": ["Ozon", "主题标签", "流量词"]
+  },
+  {
+    "name": "ozon_store_traffic_breakthrough",
+    "enabled": false,
+    "url": "https://www.10100.com/article/38850044",
+    "site_name": "10100",
+    "category_tag": "热搜词解读",
+    "preferred_keywords": ["Ozon", "流量", "关键词"]
+  },
+  {
+    "name": "ozon_new_shop_30_day_strategy",
+    "enabled": false,
+    "url": "https://www.10100.com/article/5415504",
+    "site_name": "10100",
+    "category_tag": "榜单拆解",
+    "preferred_keywords": ["Ozon", "热销品类", "趋势"]
+  },
+  {
+    "name": "ozon_operating_model_analysis",
+    "enabled": false,
+    "url": "https://www.10100.com/article/22063254",
+    "site_name": "10100",
+    "category_tag": "运营技巧",
+    "preferred_keywords": ["Ozon", "运营", "精铺"]
+  },
+  {
+    "name": "ozon_link_merge_guide",
+    "enabled": false,
+    "url": "https://www.10100.com/article/22063272",
+    "site_name": "10100",
+    "category_tag": "运营技巧",
+    "preferred_keywords": ["Ozon", "链接合并", "listing"]
+  },
+  {
+    "name": "ozon_account_selection_logistics",
+    "enabled": false,
+    "url": "https://www.10100.com/article/2924538",
+    "site_name": "10100",
+    "category_tag": "选品建议",
+    "preferred_keywords": ["Ozon", "选品", "物流"]
+  }
+]

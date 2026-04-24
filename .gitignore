@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Environment
+.env
+
+# Node
+node_modules/
+
+# Storage - runtime data (excluded from repo)
+storage/raw/*.json
+storage/topics/*.json
+storage/drafts/*.json
+storage/images/*.svg
+storage/images/*.png
+storage/publish_payloads/*.json
+storage/screenshots/*.png
+storage/source_articles/*.json
+storage/review_drafts/*.json
+
+# Browser profile (contains cookies & binary data - never commit)
+storage/xhs-profile/
+publisher/storage/xhs-profile/
+
+# Debug artifacts
+storage/debug_*.json

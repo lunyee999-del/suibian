@@ -1,0 +1,2 @@
+"""Ozon promotion MVP scaffold."""
+

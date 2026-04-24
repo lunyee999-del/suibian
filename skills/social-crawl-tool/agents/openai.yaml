@@ -1,0 +1,4 @@
+interface:
+  display_name: "Social Crawl Tool"
+  short_description: "Use crawler tool for social content capture"
+  default_prompt: "Use $social-crawl-tool to crawl platform content into structured local artifacts."
