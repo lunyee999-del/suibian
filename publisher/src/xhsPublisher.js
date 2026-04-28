@@ -6,7 +6,7 @@ async function clickFirst(page, candidates) {
   for (const selector of candidates) {
     const locator = page.locator(selector).first();
     if (await locator.count()) {
-      await locator.click({ force: true });
+      await locator.evaluate((node) => node.click());
       return true;
     }
   }
@@ -21,18 +21,30 @@ async function ensureImageMode(page) {
     return;
   }
 
-  await clickFirst(page, selectors.imageModeTab);
-  await page.waitForTimeout(1500);
-
   const toggled = await page.evaluate(() => {
-    const walker = Array.from(document.querySelectorAll("div,span,button"));
-    const target = walker.find((node) => (node.textContent || "").includes("上传图文"));
-    if (!target) {
-      return false;
+    const allElements = Array.from(document.querySelectorAll('*'));
+    const target = allElements.find(el => {
+      // Only check elements with direct text nodes
+      return Array.from(el.childNodes).some(node => node.nodeType === 3 && node.textContent.trim() === '上传图文');
+    });
+
+    if (!target) return false;
+
+    // Try to find a clickable parent wrapper
+    let clickable = target;
+    let curr = target;
+    while (curr && curr !== document.body) {
+      const cls = (curr.className || '').toString().toLowerCase();
+      if (cls.includes('tab') || curr.tagName === 'LI' || curr.getAttribute('role') === 'tab' || cls.includes('btn') || cls.includes('item')) {
+        clickable = curr;
+        break;
+      }
+      curr = curr.parentElement;
     }
-    const clickable =
-      target.closest('button,[role="tab"],[role="button"],li,div') || target;
+    
     clickable.click();
+    // Also dispatch a React-friendly bubble event just in case
+    clickable.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
     return true;
   });
 
@@ -78,12 +90,26 @@ export async function publishToXhs(payload, options) {
   }
 
   const { chromium } = await import("playwright");
-  const userDataDir = ensureProfileDir(options.profileDir);
-  const context = await chromium.launchPersistentContext(userDataDir, {
-    headless: false
-  });
+  let browser, context, page;
+  const useCDP = !!options.cdpPort;
 
-  const page = await context.newPage();
+  if (useCDP) {
+    try {
+      browser = await chromium.connectOverCDP(`http://127.0.0.1:${options.cdpPort}`);
+      context = browser.contexts()[0] || (await browser.newContext());
+      page = await context.newPage();
+    } catch (e) {
+      // Fallback if CDP is not running
+      const userDataDir = ensureProfileDir(options.profileDir);
+      context = await chromium.launchPersistentContext(userDataDir, { headless: false });
+      page = await context.newPage();
+    }
+  } else {
+    const userDataDir = ensureProfileDir(options.profileDir);
+    context = await chromium.launchPersistentContext(userDataDir, { headless: false });
+    page = await context.newPage();
+  }
+
   try {
     await page.goto(options.createUrl, { waitUntil: "networkidle", timeout: 60000 });
     await ensureImageMode(page);
@@ -110,7 +136,7 @@ export async function publishToXhs(payload, options) {
       throw new Error("Publish button not found.");
     }
 
-    await publishButton.click();
+    await publishButton.evaluate((node) => node.click());
     await page.waitForTimeout(4000);
 
     return {
@@ -120,6 +146,11 @@ export async function publishToXhs(payload, options) {
       draft_id: payload.draft_id
     };
   } finally {
-    await context.close();
+    if (page) await page.close().catch(() => {});
+    if (browser) {
+      await browser.close().catch(() => {});
+    } else if (context) {
+      await context.close().catch(() => {});
+    }
   }
 }

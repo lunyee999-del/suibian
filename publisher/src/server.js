@@ -10,6 +10,7 @@ const dryRun = (process.env.DRY_RUN || "true").toLowerCase() !== "false";
 const profileDir = process.env.XHS_BROWSER_PROFILE_DIR || path.resolve("../storage/xhs-profile");
 const createUrl =
   process.env.XHS_CREATE_URL || "https://creator.xiaohongshu.com/publish/publish";
+const cdpPort = process.env.XHS_CDP_PORT || 9333;
 const resultDir = path.resolve("../storage/publish_payloads");
 
 function jsonResponse(res, statusCode, payload) {
@@ -44,7 +45,8 @@ const server = http.createServer(async (req, res) => {
         : await publishToXhs(payload, {
             dryRun,
             profileDir,
-            createUrl
+            createUrl,
+            cdpPort
           });
     const suffix = req.url === "/internal/fetch/page" ? "fetch_result" : "publisher_result";
     writeJson(resultDir, `${payload.draft_id || Date.now()}_${suffix}.json`, {

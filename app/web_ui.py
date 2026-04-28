@@ -225,7 +225,8 @@ INDEX_HTML = """<!doctype html>
             <div class="body">${escapeHtml(item.body_text)}</div>
             ${item.publish_error ? `<div class="small" style="margin-top:10px;color:#a33a22;">发布失败：${escapeHtml(item.publish_error)}</div>` : ""}
             <div class="actions">
-              <button data-publish="${item.review_id}" ${item.review_status === "published" ? "disabled" : ""}>真实发布</button>
+              <button data-publish="${item.review_id}">真实发布</button>
+              <button class="secondary" data-delete="${item.review_id}" style="color: #a33a22;">删除草稿</button>
             </div>
           </div>
         </article>
@@ -265,9 +266,26 @@ INDEX_HTML = """<!doctype html>
         setStatus(`发布失败：${error.message}`);
       }
     }
+    async function deleteDraft(reviewId) {
+      if (!confirm("确定要彻底删除这篇草稿以及它生成的图片吗？")) return;
+      setStatus(`正在删除 review_id=${reviewId} ...`);
+      try {
+        await api("/api/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ review_id: reviewId })
+        });
+        setStatus(`已成功删除草稿`);
+        await loadDrafts();
+      } catch (error) {
+        setStatus(`删除失败：${error.message}`);
+      }
+    }
     draftsEl.addEventListener("click", (event) => {
-      const reviewId = event.target?.dataset?.publish;
-      if (reviewId) publish(reviewId);
+      const publishId = event.target?.dataset?.publish;
+      if (publishId) publish(publishId);
+      const deleteId = event.target?.dataset?.delete;
+      if (deleteId) deleteDraft(deleteId);
     });
     prepareBtn.addEventListener("click", prepare);
     refreshBtn.addEventListener("click", loadDrafts);
@@ -291,7 +309,7 @@ class WebUiServer:
         for draft in reversed(self.review_repo.list_all()):
             image_path = draft.image_asset.local_path
             publish_error = None
-            if draft.publish_result:
+            if draft.publish_result and not draft.publish_result.get("success"):
                 publish_error = (
                     draft.publish_result.get("detail", {}).get("error")
                     or draft.publish_result.get("result_status")
@@ -320,6 +338,10 @@ class WebUiServer:
 
     def publish(self, review_id: str) -> dict:
         return self.pipeline.approve_review_draft(review_id=review_id, publish=True)
+
+    def delete(self, review_id: str) -> dict:
+        success = self.review_repo.delete(review_id)
+        return {"success": success, "review_id": review_id}
 
     def publisher_health(self) -> dict:
         health_url = f"{self.settings.publisher_url.rstrip('/')}/health"
@@ -421,6 +443,11 @@ def create_handler(app: WebUiServer) -> type[BaseHTTPRequestHandler]:
                     if not review_id:
                         raise ValueError("review_id is required")
                     self._send_json(app.publish(review_id))
+                elif parsed.path == "/api/delete":
+                    review_id = str(payload.get("review_id", "")).strip()
+                    if not review_id:
+                        raise ValueError("review_id is required")
+                    self._send_json(app.delete(review_id))
                 elif parsed.path == "/api/publisher/start":
                     self._send_json(app.start_publisher())
                 else:

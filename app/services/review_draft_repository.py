@@ -35,6 +35,23 @@ class ReviewDraftRepository:
             raise FileNotFoundError(f"review draft not found: {review_id}")
         return self._load_dict(json.loads(file_path.read_text(encoding="utf-8")))
 
+    def delete(self, review_id: str) -> bool:
+        try:
+            draft = self.get(review_id)
+            if draft.image_asset and draft.image_asset.local_path:
+                image_path = Path(draft.image_asset.local_path)
+                if image_path.exists():
+                    image_path.unlink()
+        except Exception:
+            pass
+            
+        file_path = self.review_dir / f"{review_id}.json"
+        if file_path.exists():
+            file_path.unlink()
+            self.table_store.write_snapshot("review_drafts", self.list_all())
+            return True
+        return False
+
     def _load_dict(self, payload: dict) -> ReviewDraft:
         return ReviewDraft(
             source_article_id=payload["source_article_id"],
